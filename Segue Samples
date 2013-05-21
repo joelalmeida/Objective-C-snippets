@@ -30,3 +30,6 @@
     [qtvc setFinalScore:tempScore];
     
 }
+
+
+// for modal segues
