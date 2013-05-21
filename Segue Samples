@@ -1,0 +1,32 @@
+- (IBAction)dsmissReport:(id)sender {
+    //to segue back to the root view controller
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+- (IBAction)retakeQuiz:(id)sender {
+    //to segue back to a specific view controller based on its class type
+    for (UIViewController *view in self.navigationController.viewControllers) {
+        if ([view isKindOfClass:[PreQuizViewController class]]) {
+            [self.navigationController popToViewController:view animated:YES];
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//this method uses a named segue on a storyboard
+
+
+- (void)goToNextView {
+    [self performSegueWithIdentifier:@"quizDoneSegue" sender:self];
+}
+
+
+// prepare for segue helps to pass data between screens
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    QuizReportViewController *qtvc = [segue destinationViewController];
+    int tempScore = self.quiz.correctCount;
+    [qtvc setFinalScore:tempScore];
+    
+}
