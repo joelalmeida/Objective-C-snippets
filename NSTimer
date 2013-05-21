@@ -1,0 +1,31 @@
+- (void)viewDidLoad
+{
+    //if (mainint != 4) {
+        [goLabel setAlpha:0];
+        mainint = 4;
+    //}
+    
+    
+    countdownTimer = [NSTimer scheduledTimerWithTimeInterval:(1)
+                                                      target:self
+                                                    selector:@selector(countDown)
+                                                    userInfo:nil repeats:YES];
+
+    //NSLog(@"view did load");
+    
+    [super viewDidLoad];
+  // Do any additional setup after loading the view.
+}
+
+- (void) countDown {
+    //NSLog(@"coundown");
+    if (mainint > 0) {
+        countdownTimerLabel.text = [NSString stringWithFormat:@"%d", mainint -1];
+        mainint--;
+    } else {
+        [goLabel setAlpha:1];
+        [countdownTimer invalidate];
+        [self startQuiz];
+    }
+    
+}
