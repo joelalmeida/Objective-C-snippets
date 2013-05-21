@@ -1,0 +1,8 @@
+//method 1
+
+    //load the plist file
+    NSString *myFile = [[NSBundle mainBundle] pathForResource:@"Topiclist" ofType:@"plist"];
+    topicArray = [NSMutableArray arrayWithContentsOfFile:myFile];
+    
+    //using the data
+     NSString *currentTopicName =  topicArray [indexPath.row] [@"Heading"];
