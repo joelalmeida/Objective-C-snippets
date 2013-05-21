@@ -1,0 +1,37 @@
+- (NSString *) getFilePath {
+    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    NSLog(@"pathArray: %@", pathArray);
+    return [[pathArray objectAtIndex:0] stringByAppendingPathComponent:@"JAquizSaveData.plist"];
+}
+
+- (void) saveData {
+    NSString *myPath = [self getFilePath];
+    Quiz *tempScore;
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:myPath];
+    
+    if (fileExists) {
+        NSLog(@"file found. loading file and checking saved score.");
+        NSArray *loadData = [[NSArray alloc] initWithContentsOfFile:myPath];
+        tempScore = [loadData objectAtIndex:0];
+        if (self.quiz.correctCount > tempScore.correctCount) {
+            NSLog(@"new high score. saving new score");
+            NSArray *saveData = [[NSArray alloc] initWithObjects: self.quiz, nil];
+            [saveData writeToFile:[self getFilePath] atomically:YES];
+        }
+    } else {
+        NSLog(@"file not found. saving score for the first time.");
+            NSArray *saveData = [[NSArray alloc] initWithObjects: self.quiz, nil];
+            [saveData writeToFile:[self getFilePath] atomically:YES];
+        }
+}
+
+- (void) loadData {
+    NSString *myPath = [self getFilePath];
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:myPath];
+    
+    if (fileExists) {
+        NSArray *loadData = [[NSArray alloc] initWithContentsOfFile:myPath];
+        score = [[loadData objectAtIndex:0] correctCount];
+    }
+        
+}
